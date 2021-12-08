@@ -5,7 +5,7 @@ import java.io.*;
 
 public class GUIHandler extends JPanel {
 	private int[] location;
-	private JButton button;
+	private JButton button, button2, button3;
 	private JTextField locationX;
 	private JTextField locationY;
 	private JLabel column;
@@ -28,6 +28,27 @@ public class GUIHandler extends JPanel {
 	public int[] getLocationXY() {
 		return location;
 	}
+
+	public class ButtonListener6 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+        	Window[] windows = Window.getWindows();
+        	for(Window window : windows){
+        		window.dispose();
+        	}
+            MainMenu menu = new MainMenu();
+        }
+    }
+
+    public class ButtonListener7 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+        	System.out.println("Player lost");
+        	Window[] windows = Window.getWindows();
+        	for(Window window : windows){
+        		window.dispose();
+        	}
+            MainMenu menu = new MainMenu();
+        }
+    }
 
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -75,12 +96,21 @@ public class GUIHandler extends JPanel {
 	private JPanel panel3() {
 		JPanel panel3 = new JPanel();
 		panel3.setBackground(Color.darkGray);
-		panel3.setLayout(new GridLayout(1, 0));
-		panel3.setPreferredSize(new Dimension(100, 30));
+		panel3.setLayout(new GridLayout(0, 1));
+		panel3.setPreferredSize(new Dimension(200, 100));
 
 		button = new JButton("Submit");
 		button.addActionListener(new ButtonListener());
 		panel3.add(button);
+
+		button3 = new JButton("Resign");
+		button3.addActionListener(new ButtonListener7());
+		panel3.add(button3);
+
+		button2 = new JButton("Main Menu");
+		button2.addActionListener(new ButtonListener6());
+		panel3.add(button2);
+
 		return panel3;
 	}
 

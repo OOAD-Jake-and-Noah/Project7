@@ -1,7 +1,5 @@
-Leaderboard
-
-------------------
-
-asdf 10
-abcd 9
-noob 3
+dave 50
+john 30
+abcd 21
+efgh 15
+noah 10
