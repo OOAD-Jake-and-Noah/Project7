@@ -48,4 +48,13 @@ public class Ship {
     }
     return false;
   }
+
+  public boolean contains(Coordinate coord) {
+    for (int i=0; i<this.length; i++) {
+      if (this.positions[i].equals(coord)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

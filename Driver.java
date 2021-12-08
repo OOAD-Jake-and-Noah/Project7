@@ -15,42 +15,20 @@ public class Driver {
       switch (menuChoice) {
         case 1:
           System.out.println("Starting game vs a bot...\n");
-          Ship[] playerFleet = ShipFactory.createFleet();
-          int[][] board = new int[11][11];
-          for (int i=0; i<playerFleet.length; i++) {
-            Ship ship = playerFleet[i];
-            System.out.println(ship);
-            for (int j=0; j<ship.length; j++) {
-              Coordinate c = ship.positions[j];
-              int x = c.getX();
-              int y = c.getY();
-              board[y][x] = ship.getClass().toString().charAt(6);
+          GameEngine.getInstance().generateFleet(true);
+          while (true) {
+            GameEngine.getInstance().printBoard(true, false);
+            GameEngine.getInstance().printBoard(true, false);
+            System.out.println("Choose a coordinate to fire at (i.e. B10): ");
+            boolean[] result = GameEngine.getInstance().fireShot(true, new Coordinate(input.next()));
+            if (result[0]) {
+              System.out.println((result[1]) ? "HIT!" : "MISS!");
+            }
+            else {
+              System.out.println("Error: You've already shot there! Try again...");
             }
           }
-          for (int y=0; y<=10; y++) {
-            for (int x=0; x<=10; x++) {
-              Coordinate c = new Coordinate(x,y);
-              if (x == 0 && y == 0){
-                System.out.print('-');
-              }
-              else if (y == 0) {
-                System.out.print(x);
-              }
-              else if (x == 0) {
-                System.out.print((char)(y + 'A' - 1));
-              }
-              else {
-                if (board[y][x] != 0){
-                  System.out.print((char)board[y][x]);
-                }
-                System.out.print(' ');
-              }
-              System.out.print("\t| ");
-            }
-            System.out.println("\n_________________________________________________________________________________________");
-            System.out.println("                                                                                         ");
-          }
-          break;
+          //break;
         case 2:
           System.out.println("Starting 2-player game...\n");
           System.out.println("Error: Game mode not supported yet!");
