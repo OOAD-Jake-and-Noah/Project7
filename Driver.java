@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Driver {
   public static void main(String[] args) {
@@ -16,25 +17,34 @@ public class Driver {
         case 1:
           System.out.println("Starting game vs a bot...\n");
           GameEngine.getInstance().generateFleet(true);
-          while (true) {
-            GameEngine.getInstance().printBoard(true, true);
+          GameEngine.getInstance().generateFleet(false);
+          boolean player = true;
+          boolean inGame = true;
+          while (inGame) {
             System.out.println();
-            GameEngine.getInstance().printBoard(true, false);
+            System.out.println((player) ? "\n---- Player 1's Turn ----\n" : "\n---- Player 2's Turn ----\n");
+            System.out.println((!player) ? "Player 1's Board:" : "Player 2's Board:");
+            GameEngine.getInstance().printBoard(!player, false);
             System.out.println("Choose a coordinate to fire at (i.e. B10): ");
-            boolean[] result = GameEngine.getInstance().fireShot(true, new Coordinate(input.next()));
-            if (result[0]) {
-              System.out.println((result[1]) ? "HIT!" : "MISS!");
-              if (result[2]) {
-                System.out.println("A SHIP HAS BEEN SUNK!");
-                if (GameEngine.getInstance().fleetSunk(true)) {
-                  System.out.println("CONGRATULATIONS! FLEET HAS BEEN SUNK!");
-                  break;
-                }
+            boolean[] result = GameEngine.getInstance().fireShot(!player, (player) ? new Coordinate(input.next()) : new Coordinate(ThreadLocalRandom.current().nextInt(1,11), ThreadLocalRandom.current().nextInt(1,11)));
+            while (!result[0]) {
+              if (player) {
+                System.out.println("Error: You've already shot there! Try again...");
+                System.out.println("Choose a coordinate to fire at (i.e. B10): ");
+              }
+              result = GameEngine.getInstance().fireShot(!player, (player) ? new Coordinate(input.next()) : new Coordinate(ThreadLocalRandom.current().nextInt(1,11), ThreadLocalRandom.current().nextInt(1,11)));
+            }
+            System.out.println((result[1]) ? "HIT!" : "MISS!");
+            if (result[2]) {
+              System.out.println("A SHIP HAS BEEN SUNK!");
+              if (GameEngine.getInstance().fleetSunk(!player)) {
+                System.out.println((player ? "CONGRATULATIONS! ENEMY" : "SORRY! YOUR") + " FLEET HAS BEEN SUNK!");
+                inGame = false;
               }
             }
-            else {
-              System.out.println("Error: You've already shot there! Try again...");
-            }
+            System.out.println((!player) ? "Player 1's Board" : "Player 2's Board");
+            GameEngine.getInstance().printBoard(!player, false);
+            player = !player;
           }
           break;
         case 2:

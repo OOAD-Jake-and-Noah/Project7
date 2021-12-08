@@ -13,13 +13,14 @@ public class GameEngine {
   private Coordinate[] missedP2 = new Coordinate[100];
 
   public void generateFleet(boolean player1) {
-    System.out.println((player1) ? "Player 1 Fleet:" : "Player 2 Fleet");
+    System.out.println((player1) ? "Player 1 Fleet:" : "Player 2 Fleet:");
     if (player1) {
       this.fleetP1 = ShipFactory.createFleet();
     }
     else {
       this.fleetP2 = ShipFactory.createFleet();
     }
+    this.printBoard(player1, true);
   }
 
   public int[][] makeBoard(boolean player1) {
