@@ -17,7 +17,8 @@ public class Driver {
           System.out.println("Starting game vs a bot...\n");
           GameEngine.getInstance().generateFleet(true);
           while (true) {
-            GameEngine.getInstance().printBoard(true, false);
+            GameEngine.getInstance().printBoard(true, true);
+            System.out.println();
             GameEngine.getInstance().printBoard(true, false);
             System.out.println("Choose a coordinate to fire at (i.e. B10): ");
             boolean[] result = GameEngine.getInstance().fireShot(true, new Coordinate(input.next()));

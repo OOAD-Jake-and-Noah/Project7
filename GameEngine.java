@@ -49,7 +49,7 @@ public class GameEngine {
     return board;
   }
 
-  public void printBoard(boolean player1, boolean hidden) {
+  public void printBoard(boolean player1, boolean showHidden) {
     int[][] board = makeBoard(player1);
     for (int y=0; y<=10; y++) {
       for (int x=0; x<=10; x++) {
@@ -66,7 +66,7 @@ public class GameEngine {
         else {
           if (board[y][x] != 0){
             char id = (char)board[y][x];
-            if (!hidden || id == 'O' || id == '*' || id == 'X') {
+            if (showHidden || id == 'O' || id == '*' || id == 'X') {
               System.out.print(id);
             }
           }
