@@ -24,12 +24,19 @@ public class Driver {
             boolean[] result = GameEngine.getInstance().fireShot(true, new Coordinate(input.next()));
             if (result[0]) {
               System.out.println((result[1]) ? "HIT!" : "MISS!");
+              if (result[2]) {
+                System.out.println("A SHIP HAS BEEN SUNK!");
+                if (GameEngine.getInstance().fleetSunk(true)) {
+                  System.out.println("CONGRATULATIONS! FLEET HAS BEEN SUNK!");
+                  break;
+                }
+              }
             }
             else {
               System.out.println("Error: You've already shot there! Try again...");
             }
           }
-          //break;
+          break;
         case 2:
           System.out.println("Starting 2-player game...\n");
           System.out.println("Error: Game mode not supported yet!");

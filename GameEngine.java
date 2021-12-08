@@ -23,8 +23,8 @@ public class GameEngine {
   }
 
   public int[][] makeBoard(boolean player1) {
-    Ship[] fleet = (player1) ? fleetP1 : fleetP2;
-    Coordinate[] misses = (player1) ? missedP1 : missedP2;
+    Ship[] fleet = (player1) ? this.fleetP1 : this.fleetP2;
+    Coordinate[] misses = (player1) ? this.missedP1 : this.missedP2;
     int[][] board = new int[11][11];
     for (int i=0; i<misses.length && misses[i] != null; i++) {
       int x = misses[i].getX();
@@ -79,13 +79,14 @@ public class GameEngine {
     }
   }
 
-  // {validShot, wasAHit}
-  public boolean[] fireShot(boolean fromPlayer1, Coordinate target) {
-    boolean[] invalidShot = {false, false};
-    boolean[] validMiss = {true, false};
-    boolean[] validHit = {true, true};
-    Ship[] fleet = (fromPlayer1) ? fleetP1 : fleetP2;
-    Coordinate[] misses = (fromPlayer1) ? missedP1 : missedP2;
+  // {validShot, wasAHit, sunkAShip}
+  public boolean[] fireShot(boolean atPlayer1, Coordinate target) {
+    boolean[] invalidShot = {false, false, false};
+    boolean[] validMiss = {true, false, false};
+    boolean[] validHit = {true, true, false};
+    boolean[] validSunk = {true, true, true};
+    Ship[] fleet = (atPlayer1) ? this.fleetP1 : this.fleetP2;
+    Coordinate[] misses = (atPlayer1) ? this.missedP1 : this.missedP2;
     int k=0;
     for (; k<misses.length && misses[k] != null; k++) {
       if (misses[k].equals(target)) {
@@ -102,13 +103,23 @@ public class GameEngine {
               return invalidShot;
             }
             ship.hits[j] = true;
-            return validHit;
+            return (ship.isSunk() ? validSunk : validHit);
           }
         }
       }
     }
     misses[k] = target;
     return validMiss;
+  }
+
+  public boolean fleetSunk(boolean player1) {
+    Ship[] fleet = (player1) ? this.fleetP1 : this.fleetP2;
+    for (int i=0; i<fleet.length; i++) {
+      if (!fleet[i].isSunk()) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }
