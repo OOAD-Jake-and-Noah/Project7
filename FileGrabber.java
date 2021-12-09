@@ -65,7 +65,7 @@ public class FileGrabber{
     public void writeToFile(int scoreInt){
         String name;
         String score;
-        f = new JFrame("New Leaderboard Entry");
+        f = new JFrame("Enter Your Name");
         textName = new JTextField(4);
         textName.setBounds(20,50,280,30);
         btn = new JButton("Submit");
