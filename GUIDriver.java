@@ -3,18 +3,20 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
-public class GUIDriver {
-	public static void main(String[] args) {
+class GUIDriverSingleton {
+	private static GUIDriverSingleton single_instance = null;
+	private GUIDriverSingleton(){
 		MainMenu menu = new MainMenu();
-		// JFrame gameBoard = new JFrame("Game Board Test");
-		// FileGrabber leaderboard = new FileGrabber();
-		// leaderboard.readAndPrintTextFromFile();
-		// gameBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// GUIHandler control = new GUIHandler();
-		// gameBoard.add(control, BorderLayout.WEST);
-		// gameBoard.add(new GamePanel(control));
-		// gameBoard.pack();
-		// gameBoard.setVisible(true);
-		// leaderboard.writeToFile(5);
+	}
+	public static GUIDriverSingleton getInstance(){
+		if(single_instance == null)
+			single_instance = new GUIDriverSingleton();
+		return single_instance;
+	}
+}
+
+public class GUIDriver{
+	public static void main(String args[]){
+		GUIDriverSingleton gui = GUIDriverSingleton.getInstance();
 	}
 }
