@@ -1,3 +1,6 @@
+import java.util.Observable;
+import java.util.Observer;
+
 public class GameEngine {
   private static GameEngine myInstance = new GameEngine();
 
@@ -11,8 +14,10 @@ public class GameEngine {
   private Coordinate[] missedP1 = new Coordinate[100];
   private Ship[] fleetP2;
   private Coordinate[] missedP2 = new Coordinate[100];
+  private int score = 0;
 
   public void generateFleet(boolean player1) {
+    this.score = 0;
     System.out.println((player1) ? "Player 1 Fleet:" : "Player 2 Fleet:");
     if (player1) {
       this.fleetP1 = ShipFactory.createFleet();
@@ -104,12 +109,14 @@ public class GameEngine {
               return invalidShot;
             }
             ship.hits[j] = true;
+            this.score += 6;
             return (ship.isSunk() ? validSunk : validHit);
           }
         }
       }
     }
     misses[k] = target;
+    this.score -= 1;
     return validMiss;
   }
 
@@ -121,6 +128,12 @@ public class GameEngine {
       }
     }
     return true;
+  }
+
+  public int getScore() {
+    int s = this.score;
+    this.score = 0;
+    return (s > 99) ? 99 : s;
   }
 
 }

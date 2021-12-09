@@ -19,7 +19,7 @@ public class GUIHandler extends JPanel {
 		location = new int[2];
 		location[0] = 10;
 		location[1] = 10;
-		
+
 		add(panel1());
 		add(panel2());
 		add(panel3());
@@ -54,8 +54,28 @@ public class GUIHandler extends JPanel {
     //this has been reworked to function with text boxes instead of a drop down to get the x and y
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			location[0] = Integer.parseInt(locationX.getText()) - 1;
-			location[1] = Integer.parseInt(locationY.getText()) - 1;
+			GameEngine.getInstance().printBoard(false, false);
+			location[1] = Integer.parseInt(locationX.getText());
+			location[0] = Integer.parseInt(locationY.getText());
+			boolean[] result = GameEngine.getInstance().fireShot(false, new Coordinate(location[0], location[1]));
+			if(!result[0]) {
+				System.out.println("Error: You've already shot there! Try again...");
+			}
+			else {
+				System.out.println((result[1]) ? "HIT!" : "MISS!");
+				if (result[2]) {
+					System.out.println("A SHIP HAS BEEN SUNK!");
+					if (GameEngine.getInstance().fleetSunk(false)) {
+						System.out.println("CONGRATULATIONS! ENEMY FLEET HAS BEEN SUNK!");
+						Window[] windows = Window.getWindows();
+	        	for(Window window : windows){
+	        		window.dispose();
+	        	}
+						FileGrabber leaderboard = new FileGrabber();
+						leaderboard.readAndPrintTextFromFile();
+					}
+				}
+			}
 		}
 	}
 
@@ -74,7 +94,7 @@ public class GUIHandler extends JPanel {
 	}
 
 	//changed drop down boxes to text fields to fit with our implementation
-	private JPanel panel2() {		
+	private JPanel panel2() {
 		JPanel panel2 = new JPanel();
 		panel2.setBackground(Color.darkGray);
 		panel2.setLayout(new GridLayout(2, 2));

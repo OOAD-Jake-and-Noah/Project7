@@ -8,7 +8,7 @@ import java.io.*;
 //the new name is inserted into the sorted array, which is then written to the textfile to update the leaderboard as the read happens every time the
 //leaderboard is opened
 public class FileGrabber{
-     
+
     final static String fileLoc = "./leaderboardtext.txt";
     private JFrame frame = new JFrame("Leaderboard");
     private JPanel panel = new JPanel(new BorderLayout());
@@ -19,15 +19,16 @@ public class FileGrabber{
     private String newHighScore;
     private int highScoreInt;
     private JFrame f;
-     
+
     public FileGrabber() {
          newHighScore = "00";
     }
-     
-    //the following method creates a new frame that displays the current leaderboard with two buttons 
+
+    //the following method creates a new frame that displays the current leaderboard with two buttons
     //to add a new name that takes the stored high score, or to return to the main menu
     //Leaderboard is stored in the following format 4 character name + whitespace + 2 digit number from 01-99
     public void readAndPrintTextFromFile() {
+        setHighScore(GameEngine.getInstance().getScore());
         btn2 = new JButton("Add New High Score");
         btn3 = new JButton("Return to Main Menu");
         btn2.setBounds(20,50,280,30);
@@ -135,7 +136,7 @@ public class FileGrabber{
                 g.printStackTrace();
             }
             f.dispose();
-            readAndPrintTextFromFile();   
+            readAndPrintTextFromFile();
         }
     }
 

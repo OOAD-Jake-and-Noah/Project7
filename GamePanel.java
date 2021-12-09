@@ -3,6 +3,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.Random;
+import java.util.Observable;
+import java.util.Observer;
 
 //parts taken from existing JSwing Battleship: https://github.com/aawantika/battleship-gui
 //however this has been modified to fit our needs as we have a seperate game engine
@@ -23,7 +25,10 @@ public class GamePanel extends JPanel {
 		bounds = new Rectangle(0, 0, WIDTH, HEIGHT);
 		boxes = new Box[10][10];
 		createBoxes(boxes);
-		createBattleship(boxes);
+
+		System.out.println("Starting game vs a bot...\n");
+		GameEngine.getInstance().generateFleet(false);
+		GameEngine.getInstance().printBoard(false, false);
 
 		timer = new Timer(100, new TimerListener());
 		timer.start();
@@ -35,12 +40,13 @@ public class GamePanel extends JPanel {
 			for (int j = 0; j < 10; j++) {
 				boxes[i][j].draw(g);
 			}
-		}	
+		}
 	}
 
 	private class TimerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			checkLocation();
+			updateBoxes();
+			//checkLocation();
 			repaint();
 		}
 	}
@@ -55,6 +61,25 @@ public class GamePanel extends JPanel {
 			}
 			y = y + 40;
 			x = 120;
+		}
+	}
+
+	public void updateBoxes() {
+		int[] locationXY = cPanel.getLocationXY();
+		int[][] board = GameEngine.getInstance().makeBoard(false);
+		for (int y=0; y<10; y++) {
+      for (int x=0; x<10; x++) {
+        Box box = boxes[y][x];
+        if (board[y+1][x+1] != 0){
+          char id = (char)board[y+1][x+1];
+          if (id == 'O') {
+						box.emptyBox();
+					}
+					else if (id == '*' || id == 'X') {
+            box.hitBox();
+          }
+        }
+			}
 		}
 	}
 
@@ -80,6 +105,6 @@ public class GamePanel extends JPanel {
 			} else {
 				boxes[xPos][yPos].emptyBox();
 			}
-		} 
+		}
 	}
 }

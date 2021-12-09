@@ -4,14 +4,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Driver {
   public static void main(String[] args) {
-    Scanner input = new Scanner(System.in);
+    GUIDriverSingleton gui = GUIDriverSingleton.getInstance();
+
+    /*Scanner input = new Scanner(System.in);
     boolean running = true;
     while (running) {
       System.out.println("\nChoose an option #: ");
       System.out.println("\t1: Play Vs Bot");
-      System.out.println("\t2: Play 2-Player");
-      System.out.println("\t3: Leaderboard");
-      System.out.println("\t4: Exit\n");
+      System.out.println("\t2: Leaderboard");
+      System.out.println("\t3: Exit\n");
       int menuChoice = input.nextInt();
       switch (menuChoice) {
         case 1:
@@ -48,16 +49,12 @@ public class Driver {
           }
           break;
         case 2:
-          System.out.println("Starting 2-player game...\n");
-          System.out.println("Error: Game mode not supported yet!");
-          break;
-        case 3:
           System.out.println("Opening leaderboard...\n");
           System.out.println("---------------------------");
           System.out.println("--- NO SCORES AVAILABLE ---");
           System.out.println("---------------------------");
           break;
-        case 4:
+        case 3:
           System.out.println("Exiting application...\n");
           running = false;
           break;
@@ -68,6 +65,6 @@ public class Driver {
           System.out.println("Invalid selection, try again!");
           break;
       }
-    }
+    }*/
   }
 }
