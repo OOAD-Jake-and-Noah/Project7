@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.io.*;
 import java.util.Random;
 
-
+//parts taken from existing JSwing Battleship: https://github.com/aawantika/battleship-gui
+//however this has been modified to fit our needs as we have a seperate game engine
 public class GamePanel extends JPanel {
 	public static final int WIDTH = 600, HEIGHT = 600;
 	public static int numOfShipsFound = 0;

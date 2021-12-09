@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.*;
 
 public class MainMenu{
+	//the following creates the main menu frame  when instantiated;
 	JButton b1,b3,b4;
 	JFrame frame;
 	MainMenu(){
@@ -37,10 +38,9 @@ public class MainMenu{
 
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
-
+	//this listener is used to open the game board when pressing new game
 	public class ButtonListener1 implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			System.out.println("test");
 			frame.dispose();
 			JFrame gameBoard = new JFrame("Game Board Test");
 			gameBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +51,7 @@ public class MainMenu{
 			gameBoard.setVisible(true);
 		}
 	}
-
+	//this listener is used to open the leaderboard when pressing the associated button
 	public class ButtonListener2 implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			frame.dispose();

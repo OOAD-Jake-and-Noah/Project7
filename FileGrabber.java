@@ -3,6 +3,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
+//this is the class that reads to and writes to the leaderboard text file. The way it works is that the file stores the top 5 leaderboard and when the
+//read method is called the file is read and stored into an array. When trying to write a new name it is checked to see if it is is top 5, and if it is,
+//the new name is inserted into the sorted array, which is then written to the textfile to update the leaderboard as the read happens every time the
+//leaderboard is opened
 public class FileGrabber{
      
     final static String fileLoc = "./leaderboardtext.txt";
@@ -13,12 +17,16 @@ public class FileGrabber{
     private JTextField textName;
     private JButton btn, btn2, btn3;
     private String newHighScore;
+    private int highScoreInt;
     private JFrame f;
      
     public FileGrabber() {
          newHighScore = "00";
     }
      
+    //the following method creates a new frame that displays the current leaderboard with two buttons 
+    //to add a new name that takes the stored high score, or to return to the main menu
+    //Leaderboard is stored in the following format 4 character name + whitespace + 2 digit number from 01-99
     public void readAndPrintTextFromFile() {
         btn2 = new JButton("Add New High Score");
         btn3 = new JButton("Return to Main Menu");
@@ -41,27 +49,23 @@ public class FileGrabber{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < 5; i++){
-            System.out.println(top5[i]);
-            System.out.println(top5[i].substring(0,4));
-            System.out.println(top5[i].substring(5,7));
-        }
+        textArea.setEditable(false); //make the leaderboard display non-editable
         panel.add(textArea, BorderLayout.PAGE_START);
         panel.add(btn3,BorderLayout.PAGE_END);
         panel.add(btn2);
         frame.add(panel);
         frame.setPreferredSize(new Dimension(300, 300));
         frame.setSize(300,300);
-        //frame.getContentPane().add(textArea, BorderLayout.CENTER);
-        //frame.pack();
         frame.setVisible(true);
     }
 
+    //the following will ask for a name to input and will write it to the file if it is top5
+    //the score is passed to the function
     public void writeToFile(int scoreInt){
         String name;
         String score;
         f = new JFrame("New Leaderboard Entry");
-        textName = new JTextField();
+        textName = new JTextField(4);
         textName.setBounds(20,50,280,30);
         btn = new JButton("Submit");
         btn.setBounds(100,140,100,40);
@@ -79,24 +83,27 @@ public class FileGrabber{
         }
         newHighScore = score;
     }
-
+    //this is used to return to the main menu
     public class ButtonListener5 implements ActionListener{
         public void actionPerformed(ActionEvent e){
             frame.dispose();
             MainMenu menu = new MainMenu();
         }
     }
-
+    //this closes the leaderboard window an opens the text input window for a new entry
     public class ButtonListener4 implements ActionListener{
         public void actionPerformed(ActionEvent e){
             frame.dispose();
-            writeToFile(10);
+            writeToFile(highScoreInt);
         }
     }
 
+    //waits for the submit on the write method to happen and when it does inserts the new name into the sorted array
+    //if the score is high enough, and writes the new sorted leaderboard to the file and redisplays the leaderboard
+    //when done
     public class ButtonListener3 implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            String name = textName.getText();
+            String name = textName.getText().substring(0,4);
             String result = "";
             int j;
             if(e.getSource() == btn){
@@ -106,20 +113,13 @@ public class FileGrabber{
                 if(Integer.parseInt(top5[j].substring(5,7)) < Integer.parseInt(result.substring(5,7)))
                     break;
             }
-            System.out.println("test");
             for(int k = 5-2; k>=j; k--){
                 top5[k+1] = top5[k];
             }
-            System.out.println(j);
             if(j >= 5){
                 j = 4;
             }
             top5[j] = result;
-            System.out.println("Top 5 Leaderboard Values: ");
-            for(int x = 0; x < 5; x++){
-                System.out.println(top5[x]);
-            }
-
             int z = 0;
             try{
                 FileWriter fw = new FileWriter(fileLoc);
@@ -137,5 +137,9 @@ public class FileGrabber{
             f.dispose();
             readAndPrintTextFromFile();   
         }
+    }
+
+    public void setHighScore(int newScore){
+        highScoreInt = newScore;
     }
 }

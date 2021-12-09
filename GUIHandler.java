@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
+//this has been heavily modified to fit our needs and the playspace was extended to 10x10, but is originally based on code from: https://github.com/aawantika/battleship-gui
 public class GUIHandler extends JPanel {
 	private int[] location;
 	private JButton button, button2, button3;
@@ -29,6 +30,7 @@ public class GUIHandler extends JPanel {
 		return location;
 	}
 
+	//the following two button listeners are used to close the current window and return to the menu based on context
 	public class ButtonListener6 implements ActionListener{
         public void actionPerformed(ActionEvent e){
         	Window[] windows = Window.getWindows();
@@ -49,7 +51,7 @@ public class GUIHandler extends JPanel {
             MainMenu menu = new MainMenu();
         }
     }
-
+    //this has been reworked to function with text boxes instead of a drop down to get the x and y
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			location[0] = Integer.parseInt(locationX.getText()) - 1;
@@ -71,6 +73,7 @@ public class GUIHandler extends JPanel {
 		return panel1;
 	}
 
+	//changed drop down boxes to text fields to fit with our implementation
 	private JPanel panel2() {		
 		JPanel panel2 = new JPanel();
 		panel2.setBackground(Color.darkGray);
@@ -93,6 +96,7 @@ public class GUIHandler extends JPanel {
 		return panel2;
 	}
 
+	//added two new buttons to this panel
 	private JPanel panel3() {
 		JPanel panel3 = new JPanel();
 		panel3.setBackground(Color.darkGray);
