@@ -40,7 +40,8 @@ public class GUIHandler extends JPanel {
             MainMenu menu = new MainMenu();
         }
     }
-
+    //these button listeners function basically like observers in that they wait for an update from the observable button and update the
+    //observer in this specific case the menu window, in other cases it would not be the menu window, but other windows/functions
     public class ButtonListener7 implements ActionListener{
         public void actionPerformed(ActionEvent e){
         	System.out.println("Player lost");
