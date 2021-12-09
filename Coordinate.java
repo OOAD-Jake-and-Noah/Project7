@@ -1,3 +1,4 @@
+// Class to help with managing the 2D coordinate system used in Battleship
 public class Coordinate {
   private String value;
   private int x;

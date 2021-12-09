@@ -4,8 +4,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Driver {
   public static void main(String[] args) {
+    // Calls the GUIDriver to create a GUI based game
     GUIDriverSingleton gui = GUIDriverSingleton.getInstance();
 
+    // Commented-out text-based game version used to create the GameEngine
     /*Scanner input = new Scanner(System.in);
     boolean running = true;
     while (running) {

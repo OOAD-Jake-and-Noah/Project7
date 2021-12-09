@@ -58,6 +58,7 @@ public class GUIHandler extends JPanel {
 			GameEngine.getInstance().printBoard(false, false);
 			location[1] = Integer.parseInt(locationX.getText());
 			location[0] = Integer.parseInt(locationY.getText());
+			// Implied Command pattern, sends a command to the GameEngine to execute a shot being fired at the chosen coordinate
 			boolean[] result = GameEngine.getInstance().fireShot(false, new Coordinate(location[0], location[1]));
 			if(!result[0]) {
 				System.out.println("Error: You've already shot there! Try again...");
@@ -67,6 +68,7 @@ public class GUIHandler extends JPanel {
 				if (result[2]) {
 					System.out.println("A SHIP HAS BEEN SUNK!");
 					if (GameEngine.getInstance().fleetSunk(false)) {
+						// Upon a game win, close window and return to the leaderboard
 						System.out.println("CONGRATULATIONS! ENEMY FLEET HAS BEEN SUNK!");
 						Window[] windows = Window.getWindows();
 	        	for(Window window : windows){

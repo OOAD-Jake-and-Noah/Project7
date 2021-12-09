@@ -1,13 +1,17 @@
 import java.util.Observable;
 import java.util.Observer;
 
+// Creates a Singleton GameEngine to manage the backend mechanics of the game.
 public class GameEngine {
+  // Eagerly instantiates
   private static GameEngine myInstance = new GameEngine();
 
+  // Statically retrieves the sole instance
   public static GameEngine getInstance() {
     return myInstance;
   }
 
+  // Privately constructs the engine
   private GameEngine() {}
 
   private Ship[] fleetP1;
@@ -16,6 +20,7 @@ public class GameEngine {
   private Coordinate[] missedP2 = new Coordinate[100];
   private int score = 0;
 
+  // Generates a whole fleet for a player using the ShipFactory
   public void generateFleet(boolean player1) {
     this.score = 0;
     System.out.println((player1) ? "Player 1 Fleet:" : "Player 2 Fleet:");
@@ -28,6 +33,7 @@ public class GameEngine {
     this.printBoard(player1, true);
   }
 
+  // Makes a complete int/char 2D array representation of a player's board
   public int[][] makeBoard(boolean player1) {
     Ship[] fleet = (player1) ? this.fleetP1 : this.fleetP2;
     Coordinate[] misses = (player1) ? this.missedP1 : this.missedP2;
@@ -55,6 +61,7 @@ public class GameEngine {
     return board;
   }
 
+  // Nicely prints a player's board to the console, with an option for which player's perspective it should be printed from (ie should "unknowns" be hidden)
   public void printBoard(boolean player1, boolean showHidden) {
     int[][] board = makeBoard(player1);
     for (int y=0; y<=10; y++) {
@@ -85,7 +92,7 @@ public class GameEngine {
     }
   }
 
-  // {validShot, wasAHit, sunkAShip}
+  // Implements updating the game state based on a player firing a shot, returns booleans for if the result was a: {validShot, wasAHit, sunkAShip}
   public boolean[] fireShot(boolean atPlayer1, Coordinate target) {
     boolean[] invalidShot = {false, false, false};
     boolean[] validMiss = {true, false, false};
@@ -120,6 +127,7 @@ public class GameEngine {
     return validMiss;
   }
 
+  // Checks if a player's entire fleet of Ships has been sunk
   public boolean fleetSunk(boolean player1) {
     Ship[] fleet = (player1) ? this.fleetP1 : this.fleetP2;
     for (int i=0; i<fleet.length; i++) {
@@ -130,6 +138,7 @@ public class GameEngine {
     return true;
   }
 
+  // Returns the score of the game, and resets the score to 0.
   public int getScore() {
     int s = this.score;
     this.score = 0;

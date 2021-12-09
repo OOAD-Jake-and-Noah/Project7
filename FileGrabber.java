@@ -28,7 +28,9 @@ public class FileGrabber{
     //to add a new name that takes the stored high score, or to return to the main menu
     //Leaderboard is stored in the following format 4 character name + whitespace + 2 digit number from 01-99
     public void readAndPrintTextFromFile() {
+        // Sets the high score based on the last game played in the GameEngine
         setHighScore(GameEngine.getInstance().getScore());
+        
         btn2 = new JButton("Add New High Score");
         btn3 = new JButton("Return to Main Menu");
         btn2.setBounds(20,50,280,30);

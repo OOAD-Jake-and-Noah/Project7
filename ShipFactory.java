@@ -1,6 +1,8 @@
 import java.util.concurrent.ThreadLocalRandom;
 
+// Factory pattern used to generate Ships of the various subclass types
 public class ShipFactory {
+  // Creates a new ship of a given type, while ensuring it doesn't overlap with any existing Ships
   public static Ship createShip(String type, Ship[] existingShips) {
     for (int h=0; h<10; h++) {
       Coordinate upperLeft = new Coordinate(ThreadLocalRandom.current().nextInt(1,11), ThreadLocalRandom.current().nextInt(1,11));
@@ -32,6 +34,7 @@ public class ShipFactory {
     return null;
   }
 
+  // Creates a whole fleet of Ships with one of each of the subtypes
   public static Ship[] createFleet() {
     String[] types = {"AircraftCarrier", "Battleship", "Destroyer", "Submarine", "PatrolBoat"};
     Ship[] ships = {null, null, null, null, null};

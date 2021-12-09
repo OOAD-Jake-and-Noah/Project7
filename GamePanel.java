@@ -64,6 +64,7 @@ public class GamePanel extends JPanel {
 		}
 	}
 
+	// Retrieves the current board state from the GameEngine and maps it to the displayable Boxes used to represent it in the GUI
 	public void updateBoxes() {
 		int[] locationXY = cPanel.getLocationXY();
 		int[][] board = GameEngine.getInstance().makeBoard(false);
